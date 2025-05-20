@@ -24,6 +24,7 @@ model User {
 model Filmes {
   id         Int         @id @default(autoincrement())
   nome       String      @unique
+  img        String      @unique
   categorias Categoria[] @relation("FilmesCategoria")
 }
 
