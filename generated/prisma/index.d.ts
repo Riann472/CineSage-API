@@ -1152,18 +1152,21 @@ export namespace Prisma {
     id: number | null
     user: string | null
     password: string | null
+    cargo: string | null
   }
 
   export type UserMaxAggregateOutputType = {
     id: number | null
     user: string | null
     password: string | null
+    cargo: string | null
   }
 
   export type UserCountAggregateOutputType = {
     id: number
     user: number
     password: number
+    cargo: number
     _all: number
   }
 
@@ -1180,18 +1183,21 @@ export namespace Prisma {
     id?: true
     user?: true
     password?: true
+    cargo?: true
   }
 
   export type UserMaxAggregateInputType = {
     id?: true
     user?: true
     password?: true
+    cargo?: true
   }
 
   export type UserCountAggregateInputType = {
     id?: true
     user?: true
     password?: true
+    cargo?: true
     _all?: true
   }
 
@@ -1285,6 +1291,7 @@ export namespace Prisma {
     id: number
     user: string
     password: string
+    cargo: string
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1310,6 +1317,7 @@ export namespace Prisma {
     id?: boolean
     user?: boolean
     password?: boolean
+    cargo?: boolean
     categorias?: boolean | User$categoriasArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1320,9 +1328,10 @@ export namespace Prisma {
     id?: boolean
     user?: boolean
     password?: boolean
+    cargo?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user" | "password", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user" | "password" | "cargo", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     categorias?: boolean | User$categoriasArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1337,6 +1346,7 @@ export namespace Prisma {
       id: number
       user: string
       password: string
+      cargo: string
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1710,6 +1720,7 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'Int'>
     readonly user: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly cargo: FieldRef<"User", 'String'>
   }
     
 
@@ -4063,7 +4074,8 @@ export namespace Prisma {
   export const UserScalarFieldEnum: {
     id: 'id',
     user: 'user',
-    password: 'password'
+    password: 'password',
+    cargo: 'cargo'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -4096,7 +4108,8 @@ export namespace Prisma {
 
   export const UserOrderByRelevanceFieldEnum: {
     user: 'user',
-    password: 'password'
+    password: 'password',
+    cargo: 'cargo'
   };
 
   export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
@@ -4153,6 +4166,7 @@ export namespace Prisma {
     id?: IntFilter<"User"> | number
     user?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    cargo?: StringFilter<"User"> | string
     categorias?: CategoriaListRelationFilter
   }
 
@@ -4160,6 +4174,7 @@ export namespace Prisma {
     id?: SortOrder
     user?: SortOrder
     password?: SortOrder
+    cargo?: SortOrder
     categorias?: CategoriaOrderByRelationAggregateInput
     _relevance?: UserOrderByRelevanceInput
   }
@@ -4171,6 +4186,7 @@ export namespace Prisma {
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
     password?: StringFilter<"User"> | string
+    cargo?: StringFilter<"User"> | string
     categorias?: CategoriaListRelationFilter
   }, "id" | "user">
 
@@ -4178,6 +4194,7 @@ export namespace Prisma {
     id?: SortOrder
     user?: SortOrder
     password?: SortOrder
+    cargo?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -4192,6 +4209,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"User"> | number
     user?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    cargo?: StringWithAggregatesFilter<"User"> | string
   }
 
   export type FilmesWhereInput = {
@@ -4291,6 +4309,7 @@ export namespace Prisma {
   export type UserCreateInput = {
     user: string
     password: string
+    cargo: string
     categorias?: CategoriaCreateNestedManyWithoutUsersInput
   }
 
@@ -4298,12 +4317,14 @@ export namespace Prisma {
     id?: number
     user: string
     password: string
+    cargo: string
     categorias?: CategoriaUncheckedCreateNestedManyWithoutUsersInput
   }
 
   export type UserUpdateInput = {
     user?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
     categorias?: CategoriaUpdateManyWithoutUsersNestedInput
   }
 
@@ -4311,6 +4332,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
     categorias?: CategoriaUncheckedUpdateManyWithoutUsersNestedInput
   }
 
@@ -4318,17 +4340,20 @@ export namespace Prisma {
     id?: number
     user: string
     password: string
+    cargo: string
   }
 
   export type UserUpdateManyMutationInput = {
     user?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
   }
 
   export type FilmesCreateInput = {
@@ -4460,6 +4485,7 @@ export namespace Prisma {
     id?: SortOrder
     user?: SortOrder
     password?: SortOrder
+    cargo?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
@@ -4470,12 +4496,14 @@ export namespace Prisma {
     id?: SortOrder
     user?: SortOrder
     password?: SortOrder
+    cargo?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     user?: SortOrder
     password?: SortOrder
+    cargo?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
@@ -4907,12 +4935,14 @@ export namespace Prisma {
   export type UserCreateWithoutCategoriasInput = {
     user: string
     password: string
+    cargo: string
   }
 
   export type UserUncheckedCreateWithoutCategoriasInput = {
     id?: number
     user: string
     password: string
+    cargo: string
   }
 
   export type UserCreateOrConnectWithoutCategoriasInput = {
@@ -4959,6 +4989,7 @@ export namespace Prisma {
     id?: IntFilter<"User"> | number
     user?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    cargo?: StringFilter<"User"> | string
   }
 
   export type FilmesUpsertWithWhereUniqueWithoutCategoriasInput = {
@@ -5021,18 +5052,21 @@ export namespace Prisma {
   export type UserUpdateWithoutCategoriasInput = {
     user?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateWithoutCategoriasInput = {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
   }
 
   export type UserUncheckedUpdateManyWithoutCategoriasInput = {
     id?: IntFieldUpdateOperationsInput | number
     user?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    cargo?: StringFieldUpdateOperationsInput | string
   }
 
   export type FilmesUpdateWithoutCategoriasInput = {

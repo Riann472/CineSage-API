@@ -6,6 +6,12 @@ const router = express.Router();
 const { PrismaClient } = require('../generated/prisma')
 const prisma = new PrismaClient();
 
+const auth = require('../middlewares/auth')
+
+router.get('/user', auth, (req, res) => {
+    return res.json(req.user)
+})
+
 router.post('/register', async (req, res) => {
     const { user, password, catId } = req.body
 
@@ -40,7 +46,7 @@ router.post('/login', async (req, res) => {
         .then(match => {
             if (!match) return res.json({ error: "Senha incorreta." })
             token = jwt.sign({ id: findUser.id, user }, process.env.SECRET)
-            return res.json({ message: "Logado com sucesso", token: token, user: { id: findUser.id, user } })
+            return res.json({ message: "Logado com sucesso", token: token, user: { id: findUser.id, user, logged: true } })
         })
 })
 
