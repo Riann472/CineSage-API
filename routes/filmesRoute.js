@@ -1,44 +1,86 @@
 const express = require('express');
 const router = express.Router();
-const { PrismaClient } = require('../generated/prisma')
+const { PrismaClient } = require('../generated/prisma');
+const adminAuth = require('../middlewares/adminAuth');
+const auth = require('../middlewares/auth');
 const prisma = new PrismaClient();
 
-router.post('/addfilme', async (req, res) => {
-    const { nome, img, catId } = req.body;
+router.post('/addfilme', adminAuth, async (req, res) => {
+    const { nome, descricao, img, categoriaIds } = req.body;
 
-    if (!nome || !img) {
-        return res.json({ error: "Informe os campos obrigatórios: nome e imagem." });
+    if (!nome || !descricao || !Array.isArray(categoriaIds) || categoriaIds.length === 0) {
+        return res.status(400).json({ error: "Preencha todos os campos e selecione ao menos uma categoria." });
     }
 
-    if (!Array.isArray(catId) || catId.length === 0) {
-        return res.json({ error: "Informe ao menos uma categoria válida." });
-    }
+    // Verifica se é uma URL de imagem válida (extensão simples)
+    const imagemValida = (url) => {
+        return typeof url === 'string' && url.match(/^https?:\/\/.+\.(jpeg|jpg|png|gif|webp)$/i);
+    };
+
+    const imagemFinal = imagemValida(img)
+        ? img
+        : 'https://via.placeholder.com/300x450.png?text=Sem+Imagem';
 
     try {
-        const categorias = await prisma.categoria.findMany({ where: { id: { in: catId } } });
-        if (categorias.length != catId.length) {
-            return res.json({ error: "Uma ou mais categorias não foram encontradas." });
-        }
-
-        try {
-            const filme = await prisma.filmes.create({
-                data: {
-                    nome,
-                    img,
-                    categorias: {
-                        connect: categorias.map(categoria => ({ id: categoria.id }))
-                    }
+        const novoFilme = await prisma.filmes.create({
+            data: {
+                nome,
+                descricao,
+                img: imagemFinal,
+                categorias: {
+                    connect: categoriaIds.map(id => ({ id }))
                 }
-            });
+            },
+            include: {
+                categorias: true
+            }
+        });
 
-            return res.json(filme);
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: "Erro ao criar filme", detalhes: err.message });
-        }
+        res.json({ message: "Filme adicionado com sucesso", filme: novoFilme });
     } catch (err) {
-        return res.json({ error: "Erro ao pegar categorias" });
+        console.error(err);
+        res.status(500).json({ error: "Erro ao adicionar filme", detalhes: err.message });
     }
 });
+
+// GET /filmXes
+router.get('/filmes', async (req, res) => {
+    try {
+        const filmes = await prisma.filmes.findMany();
+        res.json(filmes);
+    } catch (err) {
+        res.status(500).json({ error: 'Erro ao buscar filmes.', err: err.message });
+    }
+});
+
+router.get('/recomendados/:userId', auth, async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id: parseInt(userId) },
+            include: { categorias: true }
+        });
+
+        if (!user || user.categorias.length === 0) {
+            return res.json([]); // Sem categorias → sem recomendação
+        }
+
+        const filmes = await prisma.filme.findMany({
+            where: {
+                categorias: {
+                    some: {
+                        id: { in: user.categorias.map(cat => cat.id) }
+                    }
+                }
+            }
+        });
+
+        res.json(filmes);
+    } catch (err) {
+        res.status(500).json({ error: 'Erro ao buscar recomendados.' });
+    }
+});
+
 
 module.exports = router

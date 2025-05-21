@@ -130,6 +130,7 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.FilmesScalarFieldEnum = {
   id: 'id',
   nome: 'nome',
+  descricao: 'descricao',
   img: 'img'
 };
 
@@ -151,6 +152,7 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
 
 exports.Prisma.FilmesOrderByRelevanceFieldEnum = {
   nome: 'nome',
+  descricao: 'descricao',
   img: 'img'
 };
 

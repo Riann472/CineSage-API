@@ -2129,18 +2129,21 @@ export namespace Prisma {
   export type FilmesMinAggregateOutputType = {
     id: number | null
     nome: string | null
+    descricao: string | null
     img: string | null
   }
 
   export type FilmesMaxAggregateOutputType = {
     id: number | null
     nome: string | null
+    descricao: string | null
     img: string | null
   }
 
   export type FilmesCountAggregateOutputType = {
     id: number
     nome: number
+    descricao: number
     img: number
     _all: number
   }
@@ -2157,18 +2160,21 @@ export namespace Prisma {
   export type FilmesMinAggregateInputType = {
     id?: true
     nome?: true
+    descricao?: true
     img?: true
   }
 
   export type FilmesMaxAggregateInputType = {
     id?: true
     nome?: true
+    descricao?: true
     img?: true
   }
 
   export type FilmesCountAggregateInputType = {
     id?: true
     nome?: true
+    descricao?: true
     img?: true
     _all?: true
   }
@@ -2262,6 +2268,7 @@ export namespace Prisma {
   export type FilmesGroupByOutputType = {
     id: number
     nome: string
+    descricao: string
     img: string
     _count: FilmesCountAggregateOutputType | null
     _avg: FilmesAvgAggregateOutputType | null
@@ -2287,6 +2294,7 @@ export namespace Prisma {
   export type FilmesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nome?: boolean
+    descricao?: boolean
     img?: boolean
     categorias?: boolean | Filmes$categoriasArgs<ExtArgs>
     _count?: boolean | FilmesCountOutputTypeDefaultArgs<ExtArgs>
@@ -2297,10 +2305,11 @@ export namespace Prisma {
   export type FilmesSelectScalar = {
     id?: boolean
     nome?: boolean
+    descricao?: boolean
     img?: boolean
   }
 
-  export type FilmesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "img", ExtArgs["result"]["filmes"]>
+  export type FilmesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "descricao" | "img", ExtArgs["result"]["filmes"]>
   export type FilmesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     categorias?: boolean | Filmes$categoriasArgs<ExtArgs>
     _count?: boolean | FilmesCountOutputTypeDefaultArgs<ExtArgs>
@@ -2314,6 +2323,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       nome: string
+      descricao: string
       img: string
     }, ExtArgs["result"]["filmes"]>
     composites: {}
@@ -2687,6 +2697,7 @@ export namespace Prisma {
   interface FilmesFieldRefs {
     readonly id: FieldRef<"Filmes", 'Int'>
     readonly nome: FieldRef<"Filmes", 'String'>
+    readonly descricao: FieldRef<"Filmes", 'String'>
     readonly img: FieldRef<"Filmes", 'String'>
   }
     
@@ -4084,6 +4095,7 @@ export namespace Prisma {
   export const FilmesScalarFieldEnum: {
     id: 'id',
     nome: 'nome',
+    descricao: 'descricao',
     img: 'img'
   };
 
@@ -4117,6 +4129,7 @@ export namespace Prisma {
 
   export const FilmesOrderByRelevanceFieldEnum: {
     nome: 'nome',
+    descricao: 'descricao',
     img: 'img'
   };
 
@@ -4218,6 +4231,7 @@ export namespace Prisma {
     NOT?: FilmesWhereInput | FilmesWhereInput[]
     id?: IntFilter<"Filmes"> | number
     nome?: StringFilter<"Filmes"> | string
+    descricao?: StringFilter<"Filmes"> | string
     img?: StringFilter<"Filmes"> | string
     categorias?: CategoriaListRelationFilter
   }
@@ -4225,6 +4239,7 @@ export namespace Prisma {
   export type FilmesOrderByWithRelationInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
     img?: SortOrder
     categorias?: CategoriaOrderByRelationAggregateInput
     _relevance?: FilmesOrderByRelevanceInput
@@ -4237,12 +4252,14 @@ export namespace Prisma {
     AND?: FilmesWhereInput | FilmesWhereInput[]
     OR?: FilmesWhereInput[]
     NOT?: FilmesWhereInput | FilmesWhereInput[]
+    descricao?: StringFilter<"Filmes"> | string
     categorias?: CategoriaListRelationFilter
   }, "id" | "nome" | "img">
 
   export type FilmesOrderByWithAggregationInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
     img?: SortOrder
     _count?: FilmesCountOrderByAggregateInput
     _avg?: FilmesAvgOrderByAggregateInput
@@ -4257,6 +4274,7 @@ export namespace Prisma {
     NOT?: FilmesScalarWhereWithAggregatesInput | FilmesScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Filmes"> | number
     nome?: StringWithAggregatesFilter<"Filmes"> | string
+    descricao?: StringWithAggregatesFilter<"Filmes"> | string
     img?: StringWithAggregatesFilter<"Filmes"> | string
   }
 
@@ -4358,6 +4376,7 @@ export namespace Prisma {
 
   export type FilmesCreateInput = {
     nome: string
+    descricao: string
     img: string
     categorias?: CategoriaCreateNestedManyWithoutFilmesInput
   }
@@ -4365,12 +4384,14 @@ export namespace Prisma {
   export type FilmesUncheckedCreateInput = {
     id?: number
     nome: string
+    descricao: string
     img: string
     categorias?: CategoriaUncheckedCreateNestedManyWithoutFilmesInput
   }
 
   export type FilmesUpdateInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
     categorias?: CategoriaUpdateManyWithoutFilmesNestedInput
   }
@@ -4378,6 +4399,7 @@ export namespace Prisma {
   export type FilmesUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
     categorias?: CategoriaUncheckedUpdateManyWithoutFilmesNestedInput
   }
@@ -4385,17 +4407,20 @@ export namespace Prisma {
   export type FilmesCreateManyInput = {
     id?: number
     nome: string
+    descricao: string
     img: string
   }
 
   export type FilmesUpdateManyMutationInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
   }
 
   export type FilmesUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
   }
 
@@ -4553,6 +4578,7 @@ export namespace Prisma {
   export type FilmesCountOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
     img?: SortOrder
   }
 
@@ -4563,12 +4589,14 @@ export namespace Prisma {
   export type FilmesMaxOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
     img?: SortOrder
   }
 
   export type FilmesMinOrderByAggregateInput = {
     id?: SortOrder
     nome?: SortOrder
+    descricao?: SortOrder
     img?: SortOrder
   }
 
@@ -4952,12 +4980,14 @@ export namespace Prisma {
 
   export type FilmesCreateWithoutCategoriasInput = {
     nome: string
+    descricao: string
     img: string
   }
 
   export type FilmesUncheckedCreateWithoutCategoriasInput = {
     id?: number
     nome: string
+    descricao: string
     img: string
   }
 
@@ -5014,6 +5044,7 @@ export namespace Prisma {
     NOT?: FilmesScalarWhereInput | FilmesScalarWhereInput[]
     id?: IntFilter<"Filmes"> | number
     nome?: StringFilter<"Filmes"> | string
+    descricao?: StringFilter<"Filmes"> | string
     img?: StringFilter<"Filmes"> | string
   }
 
@@ -5071,18 +5102,21 @@ export namespace Prisma {
 
   export type FilmesUpdateWithoutCategoriasInput = {
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
   }
 
   export type FilmesUncheckedUpdateWithoutCategoriasInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
   }
 
   export type FilmesUncheckedUpdateManyWithoutCategoriasInput = {
     id?: IntFieldUpdateOperationsInput | number
     nome?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
     img?: StringFieldUpdateOperationsInput | string
   }
 

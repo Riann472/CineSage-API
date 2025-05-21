@@ -18,13 +18,14 @@ model User {
   id         Int         @id @default(autoincrement())
   user       String      @unique
   password   String
-  cargo String
+  cargo      String
   categorias Categoria[] @relation("UserCategoria")
 }
 
 model Filmes {
   id         Int         @id @default(autoincrement())
   nome       String      @unique
+  descricao  String
   img        String      @unique
   categorias Categoria[] @relation("FilmesCategoria")
 }
