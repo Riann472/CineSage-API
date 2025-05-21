@@ -7,10 +7,29 @@ const { PrismaClient } = require('../generated/prisma')
 const prisma = new PrismaClient();
 
 const auth = require('../middlewares/auth')
+const adminAuth = require('../middlewares/adminAuth')
 
 router.get('/user', auth, (req, res) => {
     return res.json(req.user)
 })
+
+router.get('/getUsers', adminAuth, async (req, res) => {
+    try {
+        const users = await prisma.user.findMany({
+            include: {
+                categorias: true, // isso puxa as categorias do relacionamento N:N
+            }
+        });
+
+        // Remover a senha de cada usuário
+        const safeUsers = users.map(({ password, ...rest }) => rest);
+
+        res.json(safeUsers);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Erro ao buscar usuários", detalhes: err.message });
+    }
+});
 
 router.post('/register', async (req, res) => {
     const { user, password, catId } = req.body
@@ -25,12 +44,15 @@ router.post('/register', async (req, res) => {
             const createUser = await prisma.user.create({
                 data: {
                     user: user,
-                    password: hash
+                    password: hash,
+                    cargo: "user"
                 }
             })
-            return res.json({ id: createUser.id, user })
+            token = jwt.sign({ id: createUser.id, user, cargo: createUser.cargo }, process.env.SECRET)
+
+            return res.json({ token: token, user: { id: createUser.id, user: createUser.user, cargo: createUser.cargo, logged: true } })
         })
-        .catch(err => res.json({ error: "Erro ao inserir usuario." }))
+        .catch(err => res.json({ error: "Erro ao inserir usuario.", err: err.message || err }))
     // err.message pra ver o erro
 })
 
@@ -45,9 +67,36 @@ router.post('/login', async (req, res) => {
     bcrypt.compare(password, findUser.password)
         .then(match => {
             if (!match) return res.json({ error: "Senha incorreta." })
-            token = jwt.sign({ id: findUser.id, user }, process.env.SECRET)
-            return res.json({ message: "Logado com sucesso", token: token, user: { id: findUser.id, user, logged: true } })
+            token = jwt.sign({ id: findUser.id, user, cargo: findUser.cargo }, process.env.SECRET)
+            return res.json({ message: "Logado com sucesso", token: token, user: { id: findUser.id, user, cargo: findUser.cargo, logged: true } })
         })
+})
+
+router.post('/addadmin', adminAuth, async (req, res) => {
+    const { id } = req.body
+
+    try {
+        const user = await prisma.user.findUnique({ where: { id } })
+        if (!user) return res.json({ error: "Usuário não encontrado." })
+
+        if (user.cargo == "admin") {
+            await prisma.user.update({
+                where: { id }, data: {
+                    cargo: "user"
+                }
+            })
+            res.json({ message: "Setado como usuario" })
+        } else {
+            await prisma.user.update({
+                where: { id }, data: {
+                    cargo: "admin"
+                }
+            })
+            res.json({ message: "Setado como adm" })
+        }
+    } catch (err) {
+        res.json({ error: "Erro o adicionar admin" })
+    }
 })
 
 module.exports = router

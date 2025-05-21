@@ -147,7 +147,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\S.O.S\\Desktop\\CineSage-API\\generated\\prisma",
+      "value": "D:\\Aulas\\Projetos p faculdade\\CineSage-server\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -161,7 +161,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\S.O.S\\Desktop\\CineSage-API\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Aulas\\Projetos p faculdade\\CineSage-server\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -175,7 +175,6 @@ const config = {
     "db"
   ],
   "activeProvider": "mysql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
