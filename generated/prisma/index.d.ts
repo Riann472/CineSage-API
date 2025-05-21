@@ -4248,13 +4248,13 @@ export namespace Prisma {
   export type FilmesWhereUniqueInput = Prisma.AtLeast<{
     id?: number
     nome?: string
-    img?: string
     AND?: FilmesWhereInput | FilmesWhereInput[]
     OR?: FilmesWhereInput[]
     NOT?: FilmesWhereInput | FilmesWhereInput[]
     descricao?: StringFilter<"Filmes"> | string
+    img?: StringFilter<"Filmes"> | string
     categorias?: CategoriaListRelationFilter
-  }, "id" | "nome" | "img">
+  }, "id" | "nome">
 
   export type FilmesOrderByWithAggregationInput = {
     id?: SortOrder

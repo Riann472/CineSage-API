@@ -43,7 +43,6 @@ router.post('/addfilme', adminAuth, async (req, res) => {
     }
 });
 
-// GET /filmXes
 router.get('/filmes', async (req, res) => {
     try {
         const filmes = await prisma.filmes.findMany();
@@ -53,20 +52,33 @@ router.get('/filmes', async (req, res) => {
     }
 });
 
+router.get('/filmes/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+
+    // Exemplo: buscar no banco de dados pelo id (aqui só array simulado)
+    const filme = await prisma.filmes.findUnique({ where: { id } })
+
+    if (!filme) {
+        return res.status(404).json({ error: 'Filme não encontrado' });
+    }
+
+    res.json(filme);
+});
+
 router.get('/recomendados/:userId', auth, async (req, res) => {
     const { userId } = req.params;
-
+    console.log(userId)
     try {
         const user = await prisma.user.findUnique({
             where: { id: parseInt(userId) },
             include: { categorias: true }
         });
-
+        console.log(user)
         if (!user || user.categorias.length === 0) {
             return res.json([]); // Sem categorias → sem recomendação
         }
 
-        const filmes = await prisma.filme.findMany({
+        const filmes = await prisma.filmes.findMany({
             where: {
                 categorias: {
                     some: {
@@ -78,7 +90,7 @@ router.get('/recomendados/:userId', auth, async (req, res) => {
 
         res.json(filmes);
     } catch (err) {
-        res.status(500).json({ error: 'Erro ao buscar recomendados.' });
+        res.status(500).json({ error: 'Erro ao buscar recomendados.', err: err.message });
     }
 });
 
